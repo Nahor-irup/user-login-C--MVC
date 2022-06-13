@@ -1,0 +1,17 @@
+G:\Projects\C#\UserLogin\Services\bin\Debug\Services.dll.config
+G:\Projects\C#\UserLogin\Services\bin\Debug\Services.dll
+G:\Projects\C#\UserLogin\Services\bin\Debug\Services.pdb
+G:\Projects\C#\UserLogin\Services\bin\Debug\DAL.dll
+G:\Projects\C#\UserLogin\Services\bin\Debug\EntityFramework.dll
+G:\Projects\C#\UserLogin\Services\bin\Debug\EntityFramework.SqlServer.dll
+G:\Projects\C#\UserLogin\Services\bin\Debug\Model.dll
+G:\Projects\C#\UserLogin\Services\bin\Debug\DAL.pdb
+G:\Projects\C#\UserLogin\Services\bin\Debug\DAL.dll.config
+G:\Projects\C#\UserLogin\Services\bin\Debug\Model.pdb
+G:\Projects\C#\UserLogin\Services\bin\Debug\EntityFramework.xml
+G:\Projects\C#\UserLogin\Services\bin\Debug\EntityFramework.SqlServer.xml
+G:\Projects\C#\UserLogin\Services\obj\Debug\Services.csproj.AssemblyReference.cache
+G:\Projects\C#\UserLogin\Services\obj\Debug\Services.csproj.CoreCompileInputs.cache
+G:\Projects\C#\UserLogin\Services\obj\Debug\Services.csproj.CopyComplete
+G:\Projects\C#\UserLogin\Services\obj\Debug\Services.dll
+G:\Projects\C#\UserLogin\Services\obj\Debug\Services.pdb

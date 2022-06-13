@@ -1,0 +1,21 @@
+﻿@using Model
+@model Model.Login_Model
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="container" id="container">
+
+    <div class="form-container">
+        @using (Html.BeginForm("LoginUser", "Login", FormMethod.Post, new { enctype = "multipart/form-data", accept_charset = "utf-8" }))
+        {
+            @Html.Partial("~/Views/Shared/_Alert.cshtml")
+            <h1>Sign In</h1>
+            <input type="email" name="Email" placeholder="Email" />
+            <input type="password"  name="Password" placeholder="Password" /><br />
+            <button>Sign In</button><br/>
+            <h5>Dont have account?<a href="~/Login/SignUp"> Signup</a></h5>
+        }
+    </div>
+
+</div>

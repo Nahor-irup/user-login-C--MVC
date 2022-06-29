@@ -19,8 +19,8 @@ namespace Model
         [Required,RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", 
             ErrorMessage = "Password must be at least 8-15 characters long and contain 1 uppercase, 1 lowercase, 1 number and 1 special character.")]
         public string Password { get; set; }
-        public string Token { get; set; }
-        public System.DateTime DateCreated { get; set; }
+        public Nullable<int> Attempt { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     }
 }

@@ -4,13 +4,13 @@
     <EntitySetMapping Name="Logins">
       <EntityTypeMapping TypeName="UserLoginModel.Login">
         <MappingFragment StoreEntitySet="Login">
-          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Token" ColumnName="Token" />
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Attempt" ColumnName="Attempt" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

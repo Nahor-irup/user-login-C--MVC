@@ -196,6 +196,8 @@
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Shared\_Alert.cshtml" />
     <Content Include="Views\Login\SignUp.cshtml" />
+    <Content Include="Views\Login\ForgetPass.cshtml" />
+    <Content Include="Views\Home\ForgetPass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

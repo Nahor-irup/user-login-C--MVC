@@ -5,12 +5,12 @@
       <PropertyRef Name="LoginId" />
     </Key>
     <Property Name="LoginId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="Token" Type="nvarchar" MaxLength="100" />
-    <Property Name="DateCreated" Type="datetime" Nullable="false" />
-    <Property Name="DateUpdated" Type="datetime" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Attempt" Type="int" />
+    <Property Name="DateCreated" Type="datetime" />
+    <Property Name="DateUpdated" Type="datetime" />
   </EntityType>
   <EntityContainer Name="UserLoginModelStoreContainer">
     <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />

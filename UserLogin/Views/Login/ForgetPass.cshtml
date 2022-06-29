@@ -1,0 +1,27 @@
+﻿@using Model
+@model Model.Login_Model
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="container" id="container">
+
+    <div class="form-container">
+        @using (Html.BeginForm("ResetPassword", "Login", FormMethod.Post, new { enctype = "multipart/form-data", accept_charset = "utf-8" }))
+        {
+            @Html.Partial("~/Views/Shared/_Alert.cshtml")
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <h1>Reset</h1>
+            <h1>Password</h1><br />
+            <input type="email" name="Email" required value="@(Model!=null?Model.Email:"")" placeholder="Email" />
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            <input type="password" id="pass" required name="Password" placeholder="New Password" onkeyup="passStrength(this.val)" />
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            <meter max="3" value="0" id="password-strength-meter" required style="width:70%" title="Strength"></meter>
+            <input type="password" id="repass" name="RePassword" placeholder="Re-Type Password" /><br />
+            <button>Submit</button>
+
+        }
+    </div>
+
+</div>

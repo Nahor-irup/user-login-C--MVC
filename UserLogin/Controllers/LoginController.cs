@@ -17,12 +17,24 @@ namespace UserLogin.Controllers
         {
             loginService = new Login_Service();
         }
-
-        // GET: Login
         public ActionResult Index()
         {
+            if (Session["UserDetails"] == null)
+            {
+                return View("SignIn");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public ActionResult LogOut()
+        {
+            Session["UserDetails"] = null;
             return View("SignIn");
         }
+
         [HttpGet]
         public ActionResult SignUp()
         {
@@ -31,13 +43,13 @@ namespace UserLogin.Controllers
 
         //to signup or register new user
         [HttpPost]
-        public ActionResult SignupUser(Login_Model loginModel,string captcha, string RePassword)
-        { 
+        public ActionResult SignupUser(Login_Model loginModel, string captcha, string RePassword)
+        {
             if (ModelState.IsValid)
             {
                 if (captcha != null)
-                { 
-                    if(loginModel.Password!= RePassword)
+                {
+                    if (loginModel.Password != RePassword)
                     {
                         Session["error"] = "Pasword not matched!!";
                         return View("SignUp");
@@ -58,8 +70,9 @@ namespace UserLogin.Controllers
                             }
                             else
                             {
-                                var salt = loginModel.Username;
+                                var salt = loginModel.Username + loginModel.Email;
                                 loginModel.Password = Crypto.SHA1(loginModel.Password + salt);
+                                loginModel.Attempt = 0;
                                 if (loginService.Save(loginModel))
                                 {
                                     Session["success"] = "User added succefully.";
@@ -82,7 +95,8 @@ namespace UserLogin.Controllers
             }
             else
             {
-                return View("SignUp",loginModel);
+                Session["error"] = "Invalid data!!";
+                return View("SignUp", loginModel);
             }
         }
 
@@ -90,7 +104,7 @@ namespace UserLogin.Controllers
         [HttpPost]
         public ActionResult LoginUser(Login_Model model)
         {
-            if(model==null)
+            if (model == null)
             {
                 Session["error"] = "Invalid user credential!!";
                 return View("SignIn");
@@ -99,27 +113,69 @@ namespace UserLogin.Controllers
             {
                 if (loginService.EmailExist(model.Email))
                 {
-                    var getpass = loginService.GetUserByEmail(model.Email).Password;  //retrive password stored in database
-                    var getUsername = loginService.GetUserByEmail(model.Email).Username; //Retrive username from databse
-                    var hashPass = Crypto.SHA1(model.Password+getUsername);  //hashing password to match password from database
-                    if(hashPass !=getpass )
+                    var userData = loginService.GetUserByEmail(model.Email);
+                    var getpass = userData.Password;  //retrive password stored in database
+                    var getUsername = userData.Username; //Retrive username from databse
+                    var hashPass = Crypto.SHA1(model.Password + getUsername + model.Email);  //hashing password to match password from database
+                    if (hashPass != getpass)
                     {
-                        Session["error"] = "Invalid user credential!!";
-                        return View("SignIn");
+                        if (userData.Attempt < 5)
+                        {
+                            Session["error"] = "Invalid user credential!!";
+                            model.LoginId = userData.LoginId;
+                            model.Attempt = userData.Attempt+1;
+                            loginService.UpdateAttempt(model);
+                            return View("SignIn");
+                        }
+                        else
+                        {
+                            Session["error"] = "User is banned for attempting more than 5 try!! Please contact system admin.";
+                            return View("SignIn");
+                        }
+
                     }
                     else
                     {
-                        Session["UserDetails"] = loginService.GetUserByEmail(model.Email);
-                        Session["Success"] = "Login Successful.";
-                        return RedirectToAction("Index","Home");
+                        if (userData.Attempt >= 5)
+                        {
+                            Session["error"] = "User is banned for attempting more than 5 try!! Please contact system admin.";
+                            return View("SignIn");
+                        }
+                        else
+                        {
+                            Session["UserDetails"] = loginService.GetUserByEmail(model.Email);
+                            if (userData.Attempt ==0)
+                            {
+                                Session["Success"] = "Login Successful.";
+                                return RedirectToAction("Index", "Home");
+                            }
+                            else
+                            {
+                                model.LoginId = userData.LoginId;
+                                model.Attempt = 0;
+                                loginService.UpdateAttempt(model);
+                                Session["Success"] = "Login Successful.";
+                                return RedirectToAction("Index", "Home");
+                            }
+                            
+                        }
+                        
                     }
                 }
                 else
                 {
-                    Session["error"] = "Invalid user credential!!";
+                    Session["error"] = "Invalid user email!!";
                     return View("SignIn");
                 }
             }
         }
+
+        //for forget password
+        public ActionResult ForgetPass()
+        {
+            return View("Forgetpass");
+        }
+
+       
     }
 }

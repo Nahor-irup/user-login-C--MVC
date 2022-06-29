@@ -31,6 +31,7 @@ namespace Services.Service
                                     Email = lg.Email,
                                     DateCreated = lg.DateCreated,
                                     DateUpdated = lg.DateUpdated,
+                                    Attempt=lg.Attempt,
                                 }).FirstOrDefault();
                     return data;
                 }
@@ -53,7 +54,7 @@ namespace Services.Service
                     {
                         Username = model.Username,
                         Password = model.Password,
-                        Token = model.Token,
+                        Attempt = model.Attempt,
                         DateCreated = DateTime.Now,
                         Email = model.Email
                     };
@@ -72,7 +73,40 @@ namespace Services.Service
 
         public bool Update(Login_Model model)
         {
-            throw new NotImplementedException();
+            using (var _context = new UserLoginEntities())
+            {
+                try
+                {
+                    var login = _context.Logins.Where(lid => lid.LoginId== model.LoginId).FirstOrDefault();
+                    login.LoginId= model.LoginId;
+                    login.Password = model.Password;
+                    login.Attempt = model.Attempt;
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+        public bool UpdateAttempt(Login_Model model)
+        {
+            using (var _context = new UserLoginEntities())
+            {
+                try
+                {
+                    var login = _context.Logins.Where(lid => lid.LoginId == model.LoginId).FirstOrDefault();
+                    login.LoginId = model.LoginId;
+                    login.Attempt = model.Attempt;
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
         }
 
         //to check whether user exist or not 

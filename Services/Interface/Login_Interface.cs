@@ -14,6 +14,7 @@ namespace Services.Interface
         Login_Model GetUserByEmail(string email);
         bool Save(Login_Model model);
         bool Update(Login_Model model);
+        bool UpdateAttempt(Login_Model model);
         bool Delete(long id);
     }
 }

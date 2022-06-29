@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="UserLoginModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="UserLoginEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Logins" EntityType="UserLoginModel.Login" />
+  </EntityContainer>
   <EntityType Name="Login">
     <Key>
       <PropertyRef Name="LoginId" />
     </Key>
     <Property Name="LoginId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Token" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Attempt" Type="Int32" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="DateUpdated" Type="DateTime" Precision="3" />
   </EntityType>
-  <EntityContainer Name="UserLoginEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Logins" EntityType="Self.Login" />
-  </EntityContainer>
 </Schema>

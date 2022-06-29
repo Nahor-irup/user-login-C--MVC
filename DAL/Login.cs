@@ -17,9 +17,9 @@ namespace DAL
         public long LoginId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Token { get; set; }
-        public System.DateTime DateCreated { get; set; }
-        public Nullable<System.DateTime> DateUpdated { get; set; }
         public string Email { get; set; }
+        public Nullable<int> Attempt { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
+        public Nullable<System.DateTime> DateUpdated { get; set; }
     }
 }

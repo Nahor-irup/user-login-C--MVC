@@ -1,13 +1,4 @@
 ﻿
-var onloadCallback = function () {
-    grecaptcha.render('divcaptcha', {
-        'sitekey': '6LeDmCYgAAAAABeq5a6Tb2N8FB9KfeTxoHJjBnKW',
-        'callback': function (response) {
-            console.log('ASD')
-            $('#txtCaptcha').val(window.grecaptcha.getResponse());
-        }
-    })
-}
 
 setTimeout(function () {
     $('.alert').slideUp();
@@ -31,7 +22,6 @@ function passStrength(val) {
 
     if (strongRegex.test(newPassword)) {
         $('#password-strength-meter').val(4);
-        $('#password-strength-meter').show();
     }
     else if (mediumRegex.test(newPassword)) {
         $('#password-strength-meter').val(2);
@@ -43,6 +33,6 @@ function passStrength(val) {
     }
     else {
         $('#password-strength-meter').val(1);
-        $('#password-strength-meter').hide();
+        $('#password-strength-meter').show();
     }
 }

@@ -4,9 +4,12 @@ using Services.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace UserLogin.Controllers
 {
@@ -32,7 +35,7 @@ namespace UserLogin.Controllers
         public ActionResult LogOut()
         {
             Session["UserDetails"] = null;
-            return View("SignIn");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -43,11 +46,18 @@ namespace UserLogin.Controllers
 
         //to signup or register new user
         [HttpPost]
-        public ActionResult SignupUser(Login_Model loginModel, string captcha, string RePassword)
+        public ActionResult SignupUser(Login_Model loginModel, string RePassword)
         {
-            if (ModelState.IsValid)
+            var response = Request["g-recaptcha-response"];
+            string secretKey = "6LeDmCYgAAAAAO8tmsQZvjtTdJ_uhe8x1zJZ7Alj";
+            var client = new WebClient();
+            var result = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
+            var obj = JObject.Parse(result);
+            var status = (bool)obj.SelectToken("success");
+
+            if (status)
             {
-                if (captcha != null)
+                if (ModelState.IsValid)
                 {
                     if (loginModel.Password != RePassword)
                     {
@@ -89,13 +99,14 @@ namespace UserLogin.Controllers
                 }
                 else
                 {
-                    Session["error"] = "Invalid captcha!!";
+                    Session["error"] = "Invalid data!!";
                     return View("SignUp", loginModel);
                 }
             }
             else
             {
-                Session["error"] = "Invalid data!!";
+
+                Session["error"] = "Please verify captcha!!";
                 return View("SignUp", loginModel);
             }
         }

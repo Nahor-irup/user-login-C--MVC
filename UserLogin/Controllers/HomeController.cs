@@ -31,10 +31,18 @@ namespace UserLogin.Controllers
             }
         }
 
-        public ActionResult ForgetPass()
+        public ActionResult ResetPass()
         {
-            ViewBag.Breadcrum = "User Details";
-            return View("ForgetPass");
+            if (Session["UserDetails"] != null)
+            {
+                ViewBag.Breadcrum = "User Details";
+                return View("ResetPass");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            
         }
 
         //Reset password
@@ -42,8 +50,7 @@ namespace UserLogin.Controllers
         [HttpPost]
         public ActionResult ResetPassword(Login_Model model, string NewPassword, string RePassword, string em)
         {
-            if (model.Password != null && NewPassword != null && RePassword != null)
-            {
+            if (model.Password != null && NewPassword != null && RePassword != null){
                 var userData = loginService.GetUserByEmail(em);
                 var oldPass = userData.Password;
                 var salt = userData.Username + em;
@@ -54,54 +61,37 @@ namespace UserLogin.Controllers
                     var rex = re.IsMatch(NewPassword);
                     if (!rex)
                     {
-                        Session["error"] = "New Password must be at least 8-15 characters long and contain 1 uppercase, 1 lowercase, 1 number and 1 special character.!!";
-                        return RedirectToAction("ForgetPass", "Home", model);
-                    }
-                    else
-                    {
-                        if (NewPassword == RePassword)
-                        {
+                        Session["error"] = "New Password must be at least 8-15 characters long and contain" +
+                            " 1 uppercase, 1 lowercase, 1 number and 1 special character.!!";
+                        return RedirectToAction("ResetPass", "Home", model);
+                    }else{
+                        if (NewPassword == RePassword){
                             model.Password = Crypto.SHA1(NewPassword + salt);
-                            if (oldPass == model.Password)
-                            {
+                            if (oldPass == model.Password){
                                 Session["error"] = "New password cannot be as old password!!";
-                                return RedirectToAction("ForgetPass", "Home", model);
-                            }
-                            else
-                            {
-                                if (loginService.Update(model))
-                                {
+                                return RedirectToAction("ResetPass", "Home", model);
+                            }else{
+                                if (loginService.Update(model)){
                                     Session["success"] = "Passoword changed succefully.";
-                                    return RedirectToAction("ForgetPass", "Home", model);
-                                }
-                                else
-                                {
+                                    return RedirectToAction("ResetPass", "Home", model);
+                                }else{
                                     Session["error"] = "Error changing password!!";
-                                    return RedirectToAction("ForgetPass", "Home", model);
+                                    return RedirectToAction("ResetPass", "Home", model);
                                 }
                             }
-                        }
-                        else
-                        {
+                        }else{
                             Session["error"] = "Password didn't matched!!";
-                            return RedirectToAction("ForgetPass", "Home", model);
+                            return RedirectToAction("ResetPass", "Home", model);
                         }
                     }
-
-                }
-                else
-                {
+                }else{
                     Session["error"] = "Current password didn't matched!!";
-                    return RedirectToAction("ForgetPass", "Home", model);
+                    return RedirectToAction("ResetPass", "Home", model);
                 }
-            }
-            else
-            {
+            }else{
                 Session["error"] = "Password can't be empty!!";
-                return RedirectToAction("ForgetPass", "Home", model);
+                return RedirectToAction("ResetPass", "Home", model);
             }
-
-
         }
     }
 }

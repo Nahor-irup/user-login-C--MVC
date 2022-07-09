@@ -5,16 +5,20 @@
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 <div class="container" id="container">
-
     <div class="form-container">
         @using (Html.BeginForm("LoginUser", "Login", FormMethod.Post, new { enctype = "multipart/form-data", accept_charset = "utf-8" }))
         {
             @Html.Partial("~/Views/Shared/_Alert.cshtml")
             <h1>Sign In</h1>
-            <input type="email" name="Email" placeholder="Email" />
-            <input type="password" name="Password" placeholder="Password" /><br />  
-            <button>Sign In</button><br />
-            <h5>Dont have account?<a href="~/Login/SignUp" style="color: dodgerblue"> Signup</a></h5>
+                <input type="email" name="Email" placeholder="Email" />
+                <input type="password" id="pass" name="Password" placeholder="Password" />
+                <span class="input-group-btn nopadding">
+                    <a class="btn" onclick="(showPasswordSignin())" style="bottom: 47px;margin-top: 0px; margin-bottom: -28px; left: 101px;">
+                        <i class="eye fas fa-eye" id="eye"></i>
+                    </a>
+                </span>
+            <button> Sign In </button>
+            <h5> Dont have account?<a href="~/Login/SignUp" style="color: dodgerblue"> Signup </a></h5>
         }
     </div>
 

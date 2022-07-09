@@ -16,6 +16,7 @@ namespace Model
         [Required(ErrorMessage = "The email address is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
+
         [Required,RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", 
             ErrorMessage = "Password must be at least 8-15 characters long and contain 1 uppercase, 1 lowercase, 1 number and 1 special character.")]
         public string Password { get; set; }

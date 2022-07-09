@@ -181,12 +181,5 @@ namespace UserLogin.Controllers
             }
         }
 
-        //for forget password
-        public ActionResult ForgetPass()
-        {
-            return View("Forgetpass");
-        }
-
-       
     }
 }
